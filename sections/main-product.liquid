@@ -1,107 +1,142 @@
 {%- liquid
-  assign product = product
   assign current_variant = product.selected_or_first_available_variant
   assign s = section.settings
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+  endif
 -%}
-<section class="section" data-product>
+<section class="section product-section" data-product>
   <div class="page-width">
     <div class="product">
 
-      {%- comment -%} Gallery {%- endcomment -%}
+      {%- comment -%} ---------- GALLERY ---------- {%- endcomment -%}
       <div class="product__gallery">
         <div class="product__gallery-main" data-gallery-main>
           {%- if product.featured_media -%}
             <img src="{{ product.featured_media | image_url: width: 1200 }}"
                  alt="{{ product.featured_media.alt | escape | default: product.title }}"
-                 width="900" height="1200" fetchpriority="high">
+                 width="1000" height="1250" fetchpriority="high">
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
         </div>
+
         {%- if product.media.size > 1 -%}
-          <div class="product__thumbs">
-            {%- for media in product.media limit: 8 -%}
-              <button type="button" data-thumb data-full="{{ media | image_url: width: 1200 }}" class="{% if forloop.first %}is-active{% endif %}" aria-label="View image {{ forloop.index }}">
-                <img src="{{ media | image_url: width: 200 }}" alt="" loading="lazy" width="150" height="200">
-              </button>
-            {%- endfor -%}
+          <div class="product__thumbs-wrap">
+            <button type="button" class="product__thumb-nav" data-thumb-prev aria-label="Previous">{%- render 'icon', name: 'arrow' -%}</button>
+            <div class="product__thumbs" data-thumbs>
+              {%- for media in product.media -%}
+                <button type="button" data-thumb data-full="{{ media | image_url: width: 1200 }}" class="{% if forloop.first %}is-active{% endif %}" aria-label="View image {{ forloop.index }}">
+                  <img src="{{ media | image_url: width: 200 }}" alt="" loading="lazy" width="120" height="150">
+                </button>
+              {%- endfor -%}
+            </div>
+            <button type="button" class="product__thumb-nav" data-thumb-next aria-label="Next">{%- render 'icon', name: 'arrow' -%}</button>
           </div>
         {%- endif -%}
       </div>
 
-      {%- comment -%} Info {%- endcomment -%}
+      {%- comment -%} ---------- INFO ---------- {%- endcomment -%}
       <div class="product__info">
         {%- if s.show_vendor and product.vendor != blank -%}
-          <div class="card__vendor">{{ product.vendor }}</div>
+          <div class="product__vendor">{{ product.vendor }}</div>
         {%- endif -%}
-        <h1 class="product__title uppercase">{{ product.title }}</h1>
+
+        <h1 class="product__title">{{ product.title }}</h1>
 
         <div class="product__price" data-price>
-          {%- if current_variant.compare_at_price > current_variant.price -%}
-            <span class="price__sale">{{ current_variant.price | money }}</span>
+          {%- if on_sale -%}
             <span class="price__compare">{{ current_variant.compare_at_price | money }}</span>
+            <span class="price__current">{{ current_variant.price | money }}</span>
+            <span class="badge-sale">{{ 'products.product.on_sale' | t }}</span>
           {%- else -%}
-            {{ current_variant.price | money }}
+            <span class="price__current">{{ current_variant.price | money }}</span>
           {%- endif -%}
         </div>
 
-        {%- unless product.has_only_default_variant -%}
-          <div class="product__options">
+        <p class="product__tax">{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+
+        {%- form 'product', product, class: 'product-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+          {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
-              <div class="opt" data-option>
-                <span class="opt__label">{{ option.name }}</span>
-                <div class="opt__values">
+              {%- liquid
+                assign oname = option.name | downcase
+                assign is_color = false
+                if oname contains 'color' or oname contains 'colour'
+                  assign is_color = true
+                endif
+              -%}
+              <div class="opt" data-option data-option-name="{{ option.name | escape }}">
+                <span class="opt__label">
+                  {{ option.name }}{%- if is_color -%}: <span data-opt-selected>{{ option.selected_value }}</span>{%- endif -%}
+                </span>
+                <div class="opt__values {% if is_color %}opt__values--swatch{% endif %}">
                   {%- for value in option.values -%}
-                    {%- assign input_id = 'opt-' | append: option.position | append: '-' | append: forloop.index -%}
-                    <input type="radio" id="{{ input_id }}" name="option-{{ option.position }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
-                    <label for="{{ input_id }}">{{ value }}</label>
+                    {%- assign input_id = 'opt-' | append: section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                    <input type="radio" id="{{ input_id }}" name="option-{{ option.position }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-opt-input>
+                    {%- if is_color -%}
+                      <label for="{{ input_id }}" class="swatch" style="--sw: {{ value | downcase | split: ' ' | last }};" title="{{ value | escape }}"><span class="visually-hidden">{{ value }}</span></label>
+                    {%- else -%}
+                      <label for="{{ input_id }}">{{ value }}</label>
+                    {%- endif -%}
                   {%- endfor -%}
                 </div>
               </div>
             {%- endfor -%}
-          </div>
-        {%- endunless -%}
+          {%- endunless -%}
 
-        <form data-product-form method="post" action="{{ routes.cart_add_url }}" class="product__buy">
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
-          <div style="display:flex;gap:12px;align-items:stretch">
+          <div class="opt">
+            <span class="opt__label">{{ 'products.product.quantity.label' | t }}</span>
             <div class="qty">
               <button type="button" data-qty="minus" aria-label="{{ 'products.product.quantity.decrease' | t }}">&ndash;</button>
               <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity.label' | t }}">
               <button type="button" data-qty="plus" aria-label="{{ 'products.product.quantity.increase' | t }}">+</button>
             </div>
-            <button type="submit" class="btn btn--full" data-add-text="{{ 'products.product.add_to_cart' | t }}" {% unless current_variant.available %}disabled{% endunless %}>
+          </div>
+
+          <div class="product__buy">
+            <button type="submit" name="add" class="btn btn--full btn--outline" data-add-text="{{ 'products.product.add_to_cart' | t }}" {% unless current_variant.available %}disabled{% endunless %}>
               {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
             </button>
+            {%- if s.show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- endif -%}
           </div>
-        </form>
+        {%- endform -%}
 
-        {%- comment -%} Trust line {%- endcomment -%}
-        {%- if s.trust_text != blank -%}
-          <p class="product__meta text-light">{{ s.trust_text }}</p>
-        {%- endif -%}
+        {%- comment -%} ---------- TRUST BADGES ---------- {%- endcomment -%}
+        <div class="product__trust">
+          <div class="product__trust-item"><span>{%- render 'icon', name: 'star' -%}</span>{{ s.trust_1 }}</div>
+          <div class="product__trust-item"><span>{%- render 'icon', name: 'return' -%}</span>{{ s.trust_2 }}</div>
+          <div class="product__trust-item"><span>{%- render 'icon', name: 'lock' -%}</span>{{ s.trust_3 }}</div>
+        </div>
 
-        {%- comment -%} Accordions {%- endcomment -%}
-        <div class="accordion" style="margin-top:24px">
+        {%- comment -%} ---------- ACCORDIONS ---------- {%- endcomment -%}
+        <div class="accordion">
           {%- if product.description != blank -%}
             <details open>
-              <summary>{{ 'products.product.description' | t }}</summary>
+              <summary>{{ s.acc_1_title | default: 'About the Piece' }}</summary>
               <div class="accordion__content rte">{{ product.description }}</div>
             </details>
           {%- endif -%}
-          {%- if s.size_guide != blank -%}
-            <details>
-              <summary>{{ 'products.product.size_guide' | t }}</summary>
-              <div class="accordion__content rte">{{ s.size_guide }}</div>
-            </details>
+          {%- if s.acc_2_text != blank -%}
+            <details><summary>{{ s.acc_2_title }}</summary><div class="accordion__content rte">{{ s.acc_2_text }}</div></details>
           {%- endif -%}
-          {%- if s.shipping != blank -%}
-            <details>
-              <summary>Shipping &amp; returns</summary>
-              <div class="accordion__content rte">{{ s.shipping }}</div>
-            </details>
+          {%- if s.acc_3_text != blank -%}
+            <details><summary>{{ s.acc_3_title }}</summary><div class="accordion__content rte">{{ s.acc_3_text }}</div></details>
+          {%- endif -%}
+          {%- if s.acc_4_text != blank -%}
+            <details><summary>{{ s.acc_4_title }}</summary><div class="accordion__content rte">{{ s.acc_4_text }}</div></details>
+          {%- endif -%}
+          {%- if s.acc_5_text != blank -%}
+            <details><summary>{{ s.acc_5_title }}</summary><div class="accordion__content rte">{{ s.acc_5_text }}</div></details>
           {%- endif -%}
         </div>
+
+        <button type="button" class="product__share" data-share aria-label="Share">{%- render 'icon', name: 'share' -%} Share</button>
       </div>
 
     </div>
@@ -117,9 +152,21 @@
   "name": "Product",
   "settings": [
     { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
-    { "type": "text", "id": "trust_text", "label": "Trust line", "default": "In stock — ships within 1–2 business days. Cash on delivery available." },
-    { "type": "richtext", "id": "size_guide", "label": "Size guide", "default": "<p>S — Chest 42\" · Length 28\"<br>M — Chest 44\" · Length 29\"<br>L — Chest 46\" · Length 30\"<br>XL — Chest 48\" · Length 31\"</p>" },
-    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Free shipping over Rs 5,000. 7-day exchange on unworn items with tags.</p>" }
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout (Buy with Shop) button", "default": true },
+    { "type": "header", "content": "Trust badges" },
+    { "type": "text", "id": "trust_1", "label": "Badge 1", "default": "Gallery Quality" },
+    { "type": "text", "id": "trust_2", "label": "Badge 2", "default": "14 Day Returns" },
+    { "type": "text", "id": "trust_3", "label": "Badge 3", "default": "Secure Transactions" },
+    { "type": "header", "content": "Details (collapsible rows)" },
+    { "type": "text", "id": "acc_1_title", "label": "Row 1 title (uses product description)", "default": "About the Piece" },
+    { "type": "text", "id": "acc_2_title", "label": "Row 2 title", "default": "Print Sizes" },
+    { "type": "richtext", "id": "acc_2_text", "label": "Row 2 text", "default": "<p>A4, A3, A2, A1 and A0. All prints are produced on premium 200gsm matte poster stock with a fine art finish.</p>" },
+    { "type": "text", "id": "acc_3_title", "label": "Row 3 title", "default": "Printing & Framing" },
+    { "type": "richtext", "id": "acc_3_text", "label": "Row 3 text", "default": "<p>Giclée-quality printing. Optional frames available in natural, black and white solid wood.</p>" },
+    { "type": "text", "id": "acc_4_title", "label": "Row 4 title", "default": "Delivery" },
+    { "type": "richtext", "id": "acc_4_text", "label": "Row 4 text", "default": "<p>Dispatched within 2–3 business days. Free UK shipping on orders over £50.</p>" },
+    { "type": "text", "id": "acc_5_title", "label": "Row 5 title", "default": "Returns" },
+    { "type": "richtext", "id": "acc_5_text", "label": "Row 5 text", "default": "<p>14-day returns on unframed prints in original condition.</p>" }
   ]
 }
 {% endschema %}

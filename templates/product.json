@@ -1,6 +1,17 @@
 {
   "sections": {
-    "main": { "type": "main-product", "settings": {} }
+    "main": { "type": "main-product", "settings": {} },
+    "related": { "type": "product-recommendations", "settings": {} },
+    "reviews": {
+      "type": "reviews-summary",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "rating": 5, "quote": "High quality print on high quality matte poster! Cannot wait to gift it. It's perfect. Thank you!", "author": "Jennifer" } },
+        "r2": { "type": "review", "settings": { "rating": 5, "quote": "Stunning colours and super fast delivery. Framed it the same day — looks incredible on the wall.", "author": "Daniel" } },
+        "r3": { "type": "review", "settings": { "rating": 5, "quote": "Exactly as pictured and premium quality. Already ordered two more for friends.", "author": "Aisha" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": { "heading": "What our Customers Say", "review_count": "540" }
+    }
   },
-  "order": ["main"]
+  "order": ["main", "related", "reviews"]
 }

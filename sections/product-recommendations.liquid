@@ -1,0 +1,33 @@
+{%- liquid
+  assign coll = product.collections.first
+  assign limit = section.settings.limit
+-%}
+{%- if coll and coll.products_count > 1 -%}
+  <section class="section">
+    <div class="page-width">
+      <div class="section-header left">
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      <div class="product-grid" style="--cols: {{ section.settings.columns }}">
+        {%- assign shown = 0 -%}
+        {%- for p in coll.products -%}
+          {%- if p.id != product.id and shown < limit -%}
+            {%- render 'product-card', product: p, show_quick_add: true -%}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "You may also like",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

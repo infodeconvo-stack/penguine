@@ -515,6 +515,82 @@ a:hover > .image-banner img { transform: scale(1.02); }
 .hero h1 { letter-spacing: 0; }
 
 /* ==========================================================================
+   PRODUCT PAGE (reign & hail style)
+   ========================================================================== */
+.product { align-items: start; }
+.product__info { max-width: 470px; }
+.product__vendor { font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; color: var(--color-text-light); margin-bottom: 8px; }
+.product__title { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: var(--display-font-weight); letter-spacing: 0; line-height: 1.15; margin-bottom: 14px; }
+
+.product__price { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 1.15rem; margin: 0 0 6px; }
+.product__price .price__compare { color: var(--color-text-light); text-decoration: line-through; font-weight: 400; }
+.product__price .price__current { color: var(--color-text); font-weight: 500; }
+.badge-sale { background: #2b59ff; color: #fff; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .06em; font-size: .62rem; padding: 4px 10px; border-radius: 100px; }
+.product__tax { font-size: .82rem; color: var(--color-text-light); margin: 0 0 22px; }
+.product__tax a { text-decoration: underline; }
+
+.product-form { margin: 0; }
+.product__options, .opt { margin: 0 0 18px; }
+.opt__label { display: block; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; margin-bottom: 9px; color: var(--color-text); }
+.opt__label [data-opt-selected] { color: var(--color-text-light); }
+.opt__values { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt__values input { position: absolute; opacity: 0; pointer-events: none; }
+.opt__values label { border: 1px solid var(--color-border); background: var(--color-bg); padding: 10px 16px; cursor: pointer; min-width: 46px; text-align: center; font-size: .9rem; transition: .15s ease; border-radius: 4px; }
+.opt__values input:checked + label { border-color: var(--color-text); background: var(--color-text); color: var(--color-bg); }
+
+.opt__values--swatch { gap: 10px; }
+.opt__values--swatch label.swatch { width: 30px; height: 30px; min-width: 0; padding: 0; border-radius: 50%; background: var(--sw, #ccc); border: 1px solid var(--color-border); }
+.opt__values--swatch input:checked + label.swatch { box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3px var(--color-text); }
+
+.product-form .qty { border: 1px solid var(--color-border); border-radius: 4px; width: fit-content; margin: 0; }
+
+.product__buy { display: grid; gap: 10px; margin-top: 22px; }
+.product__buy .btn { border-radius: 4px; }
+.product__buy .shopify-payment-button__button { border-radius: 4px !important; }
+.product__buy .shopify-payment-button { margin: 0; }
+
+.product__trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; padding: 22px 0; margin: 24px 0 4px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.product__trust-item { display: flex; flex-direction: column; align-items: center; gap: 7px; font-size: .76rem; }
+.product__trust-item span { display: inline-flex; }
+.product__trust-item svg { width: 22px; height: 22px; }
+
+.product__info .accordion { margin-top: 10px; }
+
+.product__share { display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; padding: 16px 0 0; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .76rem; color: var(--color-text); cursor: pointer; }
+.product__share svg { width: 18px; height: 18px; }
+
+.product__gallery-main img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.product__thumbs-wrap { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.product__thumb-nav { flex: 0 0 auto; width: 30px; height: 90px; border: 1px solid var(--color-border); background: var(--color-bg); display: grid; place-items: center; cursor: pointer; border-radius: 4px; }
+.product__thumb-nav svg { width: 16px; height: 16px; }
+.product__thumb-nav[data-thumb-prev] svg { transform: rotate(180deg); }
+.product__thumbs { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; flex: 1; scrollbar-width: none; }
+.product__thumbs::-webkit-scrollbar { display: none; }
+.product__thumbs button { flex: 0 0 72px; border: 1px solid transparent; padding: 0; background: none; cursor: pointer; }
+.product__thumbs button.is-active { border-color: var(--color-text); }
+.product__thumbs img { width: 72px; height: 90px; object-fit: cover; display: block; }
+
+/* --- Reviews ------------------------------------------------------------- */
+.reviews { text-align: center; }
+.reviews__heading { margin-bottom: 16px; }
+.reviews__summary { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px; }
+.reviews__stars { display: inline-flex; gap: 2px; color: #2b59ff; }
+.reviews__stars svg { width: 20px; height: 20px; }
+.reviews__stars.sm svg { width: 16px; height: 16px; }
+.reviews__count { font-size: .85rem; color: var(--color-text-light); }
+.reviews__slider { position: relative; }
+.reviews__quote { display: none; margin: 0 auto; max-width: 620px; }
+.reviews__quote.is-active { display: block; }
+.reviews__quote .reviews__stars { margin-bottom: 12px; }
+.reviews__quote blockquote { font-size: 1.05rem; line-height: 1.6; margin: 0 0 12px; }
+.reviews__name { font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; }
+.reviews__nav { display: flex; justify-content: center; gap: 16px; margin-top: 22px; }
+.reviews__nav button { background: none; border: 0; cursor: pointer; color: var(--color-text-light); padding: 6px; }
+.reviews__nav button:hover { color: var(--color-text); }
+.reviews__nav button svg { width: 20px; height: 20px; }
+.reviews__nav button[data-review-prev] svg { transform: rotate(180deg); }
+
+/* ==========================================================================
    MOBILE RESPONSIVE
    ========================================================================== */
 

@@ -169,7 +169,7 @@
 
   // Add to cart (delegated for any [data-product-form])
   document.addEventListener('submit', async (e) => {
-    const form = e.target.closest('[data-product-form]');
+    const form = e.target.closest('[data-product-form], form.product-form');
     if (!form) return;
     e.preventDefault();
     const btn = form.querySelector('[type="submit"]');
@@ -238,16 +238,27 @@
 
   /* --- Product: gallery + variants --------------------------------------- */
   function initProduct(root) {
-    // Gallery thumbnails
+    // Gallery: thumbnail click swaps main image
     const mainImg = $('[data-gallery-main] img', root);
-    $$('[data-thumb]', root).forEach((thumb) => {
+    const thumbs = $$('[data-thumb]', root);
+    thumbs.forEach((thumb) => {
       thumb.addEventListener('click', () => {
         const full = thumb.getAttribute('data-full');
         if (mainImg && full) mainImg.src = full;
-        $$('[data-thumb]', root).forEach((t) => t.classList.remove('is-active'));
+        thumbs.forEach((t) => t.classList.remove('is-active'));
         thumb.classList.add('is-active');
       });
     });
+
+    // Gallery: prev / next arrows scroll the thumbnail strip
+    const strip = $('[data-thumbs]', root);
+    const prevBtn = $('[data-thumb-prev]', root);
+    const nextBtn = $('[data-thumb-next]', root);
+    if (strip && prevBtn && nextBtn) {
+      const step = () => Math.max(160, strip.clientWidth * 0.6);
+      prevBtn.addEventListener('click', () => strip.scrollBy({ left: -step(), behavior: 'smooth' }));
+      nextBtn.addEventListener('click', () => strip.scrollBy({ left: step(), behavior: 'smooth' }));
+    }
 
     // Variants
     const dataEl = $('[data-product-json]', root);
@@ -255,10 +266,10 @@
     let product;
     try { product = JSON.parse(dataEl.textContent); } catch (e) { return; }
 
-    const form     = $('[data-product-form]', root);
-    const idInput  = form ? form.querySelector('[name="id"]') : null;
-    const priceEl  = $('[data-price]', root);
-    const addBtn   = form ? form.querySelector('[type="submit"]') : null;
+    const form    = root.querySelector('form.product-form') || $('[data-product-form]', root);
+    const idInput = form ? form.querySelector('[name="id"]') : null;
+    const priceEl = $('[data-price]', root);
+    const addBtn  = form ? form.querySelector('[type="submit"]') : null;
 
     function selectedOptions() {
       return $$('[data-option]', root).map((group) => {
@@ -268,29 +279,38 @@
         return sel ? sel.value : null;
       });
     }
-
     function findVariant(opts) {
-      return product.variants.find((v) =>
-        v.options.every((o, i) => o === opts[i])
-      );
+      return product.variants.find((v) => v.options.every((o, i) => o === opts[i]));
     }
 
     function update() {
       const variant = findVariant(selectedOptions());
       if (!variant) return;
       if (idInput) idInput.value = variant.id;
+
       if (priceEl) {
         if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-          priceEl.innerHTML = `<span class="price__sale">${formatMoney(variant.price)}</span> <span class="price__compare">${formatMoney(variant.compare_at_price)}</span>`;
+          priceEl.innerHTML =
+            '<span class="price__compare">' + formatMoney(variant.compare_at_price) + '</span>' +
+            '<span class="price__current">' + formatMoney(variant.price) + '</span>' +
+            '<span class="badge-sale">Sale</span>';
         } else {
-          priceEl.textContent = formatMoney(variant.price);
+          priceEl.innerHTML = '<span class="price__current">' + formatMoney(variant.price) + '</span>';
         }
       }
+
+      // Update "Colour: X" label
+      $$('[data-option]', root).forEach((group) => {
+        const sel = group.querySelector('[data-opt-selected]');
+        const checked = group.querySelector('input:checked');
+        if (sel && checked) sel.textContent = checked.value;
+      });
+
       if (addBtn) {
         if (variant.available) { addBtn.disabled = false; addBtn.textContent = addBtn.getAttribute('data-add-text') || 'Add to cart'; }
         else { addBtn.disabled = true; addBtn.textContent = 'Sold out'; }
       }
-      // update URL
+
       if (history.replaceState) {
         const url = new URL(window.location);
         url.searchParams.set('variant', variant.id);
@@ -298,9 +318,17 @@
       }
     }
 
-    $$('[data-option] input, [data-option] select', root).forEach((el) =>
-      el.addEventListener('change', update)
-    );
+    $$('[data-option] input, [data-option] select', root).forEach((el) => el.addEventListener('change', update));
+
+    // Share
+    const shareBtn = $('[data-share]', root);
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const url = window.location.href;
+        if (navigator.share) { try { await navigator.share({ url: url, title: document.title }); } catch (e) {} }
+        else if (navigator.clipboard) { try { await navigator.clipboard.writeText(url); shareBtn.lastChild.textContent = ' Link copied'; } catch (e) {} }
+      });
+    }
   }
 
   /* --- Newsletter success message (?customer_posted=true) ---------------- */
@@ -415,10 +443,26 @@
     if (trigger) { e.preventDefault(); openQuickAdd(trigger.getAttribute('data-quick-add')); }
   });
 
+  /* --- Reviews slider ---------------------------------------------------- */
+  function initReviews() {
+    $$('[data-reviews]').forEach((slider) => {
+      const items = $$('[data-review]', slider);
+      if (items.length < 2) return;
+      let idx = 0;
+      const show = (i) => items.forEach((el, n) => el.classList.toggle('is-active', n === i));
+      const wrap = slider.parentElement;
+      const prev = wrap.querySelector('[data-review-prev]');
+      const next = wrap.querySelector('[data-review-next]');
+      if (prev) prev.addEventListener('click', () => { idx = (idx - 1 + items.length) % items.length; show(idx); });
+      if (next) next.addEventListener('click', () => { idx = (idx + 1) % items.length; show(idx); });
+    });
+  }
+
   /* --- Init -------------------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
     refreshCart();
     $$('[data-product]').forEach(initProduct);
     initNewsletter();
+    initReviews();
   });
 })();
