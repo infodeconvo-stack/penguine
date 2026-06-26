@@ -583,3 +583,10 @@ img, svg, video { max-width: 100%; }
   .btn { padding: 13px 20px; font-size: .8rem; }
 }
 
+/* Touch devices: no hover, so always reveal tile/card actions */
+@media (hover: none) {
+  .style-tile__cta { opacity: 1; transform: none; }
+  .style-tile__veil { background: linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.1) 70%); }
+  .card__quick { opacity: 1; transform: none; }
+}
+
