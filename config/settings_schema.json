@@ -55,8 +55,8 @@
         "type": "font_picker",
         "id": "heading_font",
         "label": "Headings",
-        "default": "oswald_n6",
-        "info": "Bold uppercase display font suits a streetwear look."
+        "default": "archivo_n6",
+        "info": "A clean modern grotesk. Change it here anytime."
       },
       {
         "type": "font_picker",
