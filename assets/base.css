@@ -494,3 +494,87 @@ a:hover > .image-banner img { transform: scale(1.02); }
 .card__title { letter-spacing: .01em; }
 .hero h1 { letter-spacing: .005em; }
 
+/* ==========================================================================
+   MOBILE RESPONSIVE
+   ========================================================================== */
+
+/* Stop full-bleed banners causing horizontal scroll. `clip` keeps sticky working. */
+body { overflow-x: clip; }
+img, svg, video { max-width: 100%; }
+
+/* --- Tablet --- */
+@media (max-width: 990px) {
+  .product { gap: 28px; }
+  .testimonials { gap: 16px; }
+  .header__nav { gap: 18px; }
+}
+
+/* --- Phone --- */
+@media (max-width: 749px) {
+  .page-width { padding: 0 16px; }
+  .section { padding: 44px 0; }
+  .section--tight { padding: 28px 0; }
+  .section-header { margin-bottom: 26px; }
+
+  h1 { font-size: clamp(2rem, 8.5vw, 2.6rem); }
+  h2 { font-size: clamp(1.55rem, 6.5vw, 2.1rem); }
+
+  /* Hero */
+  .hero--full .hero__media img { height: clamp(420px, 66vh, 560px); object-position: center; }
+  .hero--medium .hero__media img { height: clamp(340px, 50vh, 460px); object-position: center; }
+  .hero__content { padding: 22px 18px 30px; }
+  .hero h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero__content p { font-size: .95rem; max-width: 100%; }
+  .hero__cta { gap: 10px; }
+
+  /* Eyebrow rule marks shorter */
+  .section-header .eyebrow::before,
+  .section-header .eyebrow::after { width: 16px; margin: 0 8px; }
+
+  /* Product grid + cards */
+  .product-grid { gap: 12px; }
+  .card__title { font-size: .9rem; }
+  .card__quick { opacity: 1; transform: none; } /* touch: no hover, keep add button visible */
+
+  /* Product page */
+  .product { grid-template-columns: 1fr; gap: 22px; }
+  .product__gallery { position: static; }
+  .product__title { font-size: clamp(1.4rem, 6.5vw, 1.9rem); }
+  .product__price { font-size: 1.2rem; }
+  .product__buy > div { flex-wrap: wrap; }
+  .product__buy .btn--full { flex: 1 1 100%; }
+
+  /* Newsletter form stacks */
+  .newsletter__form { flex-direction: column; gap: 10px; }
+  .newsletter__form input,
+  .newsletter__form button { width: 100%; padding: 14px; }
+
+  /* Collection toolbar wraps */
+  .collection-toolbar { flex-wrap: wrap; gap: 10px; }
+
+  /* Footer bottom stacks */
+  .footer__bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  /* Marquee a touch smaller */
+  .marquee__item { font-size: .82rem; padding: 0 18px; }
+  .marquee__item::after { margin-left: 18px; }
+
+  /* CTA rows full width */
+  .cta-row { flex-direction: column; }
+  .cta-row .btn { width: 100%; }
+
+  /* Cart drawer full-ish on small screens */
+  .drawer { width: min(440px, 100vw); }
+}
+
+/* --- Small phone --- */
+@media (max-width: 430px) {
+  .header__logo .logo-text { font-size: 1.15rem; letter-spacing: .12em; }
+  .header__actions { gap: 8px; }
+  .header__actions button, .header__actions a { padding: 4px; }
+  .product-grid { --cols: 2; gap: 10px; }
+  .style-grid { gap: 8px; }
+  h1 { font-size: clamp(1.8rem, 9vw, 2.3rem); }
+  .btn { padding: 13px 20px; font-size: .8rem; }
+}
+
