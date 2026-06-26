@@ -1,0 +1,72 @@
+{%- liquid
+  assign menu = section.settings.menu
+-%}
+<header class="header">
+  <div class="page-width">
+    <div class="header__inner">
+
+      <div class="header__start">
+        <button type="button" class="icon-btn menu-toggle" data-drawer-open="MobileNav" aria-label="{{ 'accessibility.open_menu' | t }}">
+          {%- render 'icon', name: 'menu' -%}
+        </button>
+        <nav class="header__nav" aria-label="Primary">
+          {%- for link in menu.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" width="{{ settings.logo.width }}" height="{{ settings.logo.height }}" style="width:{{ settings.logo_width }}px;height:auto">
+        {%- else -%}
+          <span class="logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+
+      <div class="header__actions">
+        <a href="{{ routes.search_url }}" class="icon-btn" aria-label="{{ 'accessibility.search' | t }}">{%- render 'icon', name: 'search' -%}</a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">{%- render 'icon', name: 'account' -%}</a>
+        {%- endif -%}
+        <button type="button" class="icon-btn" data-drawer-open="CartDrawer" aria-label="{{ 'accessibility.cart' | t }}">
+          {%- render 'icon', name: 'cart' -%}
+          <span class="cart-count" {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile slide-out nav {%- endcomment -%}
+<nav id="MobileNav" class="mobile-nav" aria-hidden="true" aria-label="Mobile">
+  <div class="mobile-nav__head">
+    <span class="logo-text">{{ shop.name }}</span>
+    <button type="button" class="icon-btn" data-drawer-close aria-label="{{ 'accessibility.close_menu' | t }}">{%- render 'icon', name: 'close' -%}</button>
+  </div>
+  {%- for link in menu.links -%}
+    <a href="{{ link.url }}" data-drawer-close>{{ link.title }}</a>
+  {%- endfor -%}
+  {%- if shop.customer_accounts_enabled -%}
+    <a href="{{ routes.account_url }}" data-drawer-close>{{ 'accessibility.account' | t }}</a>
+  {%- endif -%}
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "paragraph",
+      "content": "Logo, favicon and colors are set in Theme settings."
+    }
+  ]
+}
+{% endschema %}

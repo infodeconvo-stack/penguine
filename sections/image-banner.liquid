@@ -1,0 +1,68 @@
+{%- liquid
+  assign s = section.settings
+  assign full = ''
+  if s.full_width
+    assign full = 'image-banner--full'
+  endif
+  assign loading = 'lazy'
+  assign fetch = 'auto'
+  if s.eager
+    assign loading = 'eager'
+    assign fetch = 'high'
+  endif
+  assign sec_class = 'section--tight'
+  if s.spacing == 'none'
+    assign sec_class = ''
+  endif
+-%}
+{%- capture banner -%}
+  <div class="image-banner {{ full }}">
+    {%- if s.image != blank -%}
+      <img src="{{ s.image | image_url: width: 2400 }}"
+           srcset="{{ s.image | image_url: width: 1000 }} 1000w, {{ s.image | image_url: width: 1600 }} 1600w, {{ s.image | image_url: width: 2400 }} 2400w"
+           sizes="100vw" alt="{{ s.alt | escape | default: shop.name }}"
+           width="{{ s.image.width }}" height="{{ s.image.height }}" loading="{{ loading }}" fetchpriority="{{ fetch }}">
+    {%- elsif s.fallback_image != blank -%}
+      <img src="{{ s.fallback_image | asset_url }}" alt="{{ s.alt | escape | default: shop.name }}"
+           width="{{ s.img_width }}" height="{{ s.img_height }}" loading="{{ loading }}" fetchpriority="{{ fetch }}">
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+{%- endcapture -%}
+
+<section class="{{ sec_class }}">
+  {%- if s.full_width == false -%}<div class="page-width">{%- endif -%}
+    {%- if s.link != blank -%}
+      <a href="{{ s.link }}" aria-label="{{ s.alt | escape | default: 'Shop now' }}">{{ banner }}</a>
+    {%- else -%}
+      {{ banner }}
+    {%- endif -%}
+  {%- if s.full_width == false -%}</div>{%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "A pre-designed banner works best. Shown at its natural ratio — not cropped." },
+    { "type": "text", "id": "alt", "label": "Alt text (SEO/accessibility)", "default": "Featured banner" },
+    { "type": "url", "id": "link", "label": "Link (optional)" },
+    { "type": "checkbox", "id": "full_width", "label": "Full width (edge to edge)", "default": true },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing",
+      "options": [{ "value": "tight", "label": "Normal" }, { "value": "none", "label": "None (flush)" }],
+      "default": "tight"
+    },
+    { "type": "checkbox", "id": "eager", "label": "Load immediately (use for the top banner)", "default": false },
+    {
+      "type": "header",
+      "content": "Built-in fallback"
+    },
+    { "type": "text", "id": "fallback_image", "label": "Fallback asset filename", "info": "Used if no image is picked above.", "default": "banner-never-lose.jpg" },
+    { "type": "number", "id": "img_width", "label": "Fallback width (px)", "default": 1200 },
+    { "type": "number", "id": "img_height", "label": "Fallback height (px)", "default": 450 }
+  ],
+  "presets": [{ "name": "Image banner" }]
+}
+{% endschema %}

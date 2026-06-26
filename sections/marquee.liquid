@@ -1,0 +1,48 @@
+{%- liquid
+  assign theme_class = ''
+  if section.settings.color_scheme == 'light'
+    assign theme_class = 'marquee--light'
+  endif
+-%}
+<div class="marquee {{ theme_class }}" style="--speed: {{ section.settings.speed }}s">
+  <div class="marquee__track" aria-hidden="true">
+    {%- for i in (1..2) -%}
+      <div class="marquee__group">
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select", "id": "color_scheme", "label": "Color",
+      "options": [{ "value": "dark", "label": "Dark" }, { "value": "light", "label": "Light" }],
+      "default": "dark"
+    },
+    { "type": "range", "id": "speed", "label": "Scroll speed", "min": 15, "max": 60, "step": 1, "unit": "s", "default": 32 }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Text", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Typography" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Typography" } },
+        { "type": "item", "settings": { "text": "Calligraphy" } },
+        { "type": "item", "settings": { "text": "Line Art" } },
+        { "type": "item", "settings": { "text": "Illustration" } },
+        { "type": "item", "settings": { "text": "Abstract" } },
+        { "type": "item", "settings": { "text": "Lettering" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

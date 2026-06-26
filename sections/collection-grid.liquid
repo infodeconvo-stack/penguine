@@ -1,0 +1,97 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<section class="section">
+  <div class="page-width">
+    {%- if s.heading != blank or s.eyebrow != blank -%}
+      <div class="section-header">
+        {%- if s.eyebrow != blank -%}<span class="eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="uppercase">{{ s.heading }}</h2>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="style-grid" style="--cols: {{ s.columns }}">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign coll = block.settings.collection
+          assign tile_url = block.settings.link
+          if tile_url == blank and coll != blank
+            assign tile_url = coll.url
+          endif
+          if tile_url == blank
+            assign tile_url = routes.collections_url
+          endif
+          assign label = block.settings.heading
+          if label == blank and coll != blank
+            assign label = coll.title
+          endif
+          assign img = block.settings.image
+          if img == blank and coll != blank
+            assign img = coll.featured_image
+          endif
+          assign wide = ''
+          if block.settings.wide
+            assign wide = 'style-tile--wide'
+          endif
+        -%}
+        <a href="{{ tile_url }}" class="style-tile {{ wide }}" {{ block.shopify_attributes }}>
+          {%- if img != blank -%}
+            <img src="{{ img | image_url: width: 1000 }}"
+                 srcset="{{ img | image_url: width: 500 }} 500w, {{ img | image_url: width: 1000 }} 1000w"
+                 sizes="(max-width: 750px) 50vw, 33vw"
+                 alt="{{ label | escape }}" width="600" height="800" loading="lazy">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <span class="style-tile__veil"></span>
+          <span class="style-tile__label">
+            <span class="style-tile__name">{{ label | default: 'Collection' }}</span>
+            {%- if s.show_count and coll != blank -%}
+              <span class="style-tile__count"> · {{ coll.products_count }} items</span>
+            {%- endif -%}
+            <span class="style-tile__cta">Shop {%- render 'icon', name: 'arrow' -%}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection grid",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Find your style" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by style" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image (overrides collection image)" },
+        { "type": "text", "id": "heading", "label": "Label (overrides collection name)" },
+        { "type": "url", "id": "link", "label": "Custom link (optional)" },
+        { "type": "checkbox", "id": "wide", "label": "Wide tile (spans 2 columns)", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection grid",
+      "blocks": [
+        { "type": "tile", "settings": { "heading": "Typography" } },
+        { "type": "tile", "settings": { "heading": "Calligraphy" } },
+        { "type": "tile", "settings": { "heading": "Illustration" } },
+        { "type": "tile", "settings": { "heading": "Abstract" } },
+        { "type": "tile", "settings": { "heading": "Lettering" } },
+        { "type": "tile", "settings": { "heading": "Line Art" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

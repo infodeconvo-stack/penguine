@@ -1,0 +1,32 @@
+<section class="section--tight" {% if section.settings.bg != blank %}style="background:{{ section.settings.bg }}"{% endif %}>
+  <div class="page-width">
+    <div class="rich-text {{ section.settings.align }}">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="uppercase">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.text != blank -%}<div class="text-light">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn mt-2">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built in small batches" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every print is a limited run. When it's gone, it's gone.</p>" },
+    {
+      "type": "select", "id": "align", "label": "Alignment",
+      "options": [{ "value": "", "label": "Center" }, { "value": "left", "label": "Left" }],
+      "default": ""
+    },
+    { "type": "color", "id": "bg", "label": "Background (optional)" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

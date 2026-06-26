@@ -1,0 +1,62 @@
+{%- comment -%} Slide-out cart drawer. Body is re-rendered by theme.js. {%- endcomment -%}
+{%- liquid
+  assign threshold_cents = settings.cart_free_shipping_threshold | times: 100
+-%}
+<aside id="CartDrawer" class="drawer" aria-hidden="true" aria-label="{{ 'sections.cart.title' | t }}" role="dialog">
+  <div class="drawer__head">
+    <h2>{{ 'sections.cart.title' | t }}</h2>
+    <button type="button" class="icon-btn" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+      {%- render 'icon', name: 'close' -%}
+    </button>
+  </div>
+
+  {%- if settings.cart_show_free_shipping_bar -%}
+    <div class="page-width" style="padding-top:8px">
+      <div class="ship-bar" data-ship-bar data-threshold="{{ threshold_cents }}" {% if threshold_cents == 0 %}hidden{% endif %}>
+        <div class="ship-bar__track"><div class="ship-bar__fill"></div></div>
+        <div class="ship-bar__text"></div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="drawer__body">
+    {%- if cart.item_count == 0 -%}
+      <div class="drawer__empty">
+        <p>{{ 'sections.cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn" data-drawer-close>{{ 'general.continue_shopping' | t }}</a>
+      </div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-line" data-key="{{ item.key }}">
+          <a class="cart-line__img" href="{{ item.url }}">
+            {%- if item.image -%}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}" width="120" height="160" loading="lazy">{%- endif -%}
+          </a>
+          <div>
+            <a class="cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.variant.title contains 'Default' -%}
+              <div class="cart-line__variant">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            <div class="cart-line__price">{{ item.final_line_price | money }}</div>
+            <div class="qty" data-key="{{ item.key }}">
+              <button type="button" data-qty="minus" aria-label="Decrease">&ndash;</button>
+              <input type="number" value="{{ item.quantity }}" min="0" data-qty-input>
+              <button type="button" data-qty="plus" aria-label="Increase">+</button>
+            </div>
+            <button type="button" class="cart-line__remove" data-remove>{{ 'sections.cart.remove' | t }}</button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <div class="drawer__foot" {% if cart.item_count == 0 %}hidden{% endif %}>
+    <div class="drawer__subtotal">
+      <span>{{ 'sections.cart.subtotal' | t }}</span>
+      <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+    <p class="text-light" style="font-size:.78rem;margin:0 0 12px">{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn--full">{{ 'sections.cart.checkout' | t }}</button>
+    </form>
+  </div>
+</aside>

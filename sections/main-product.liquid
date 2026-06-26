@@ -1,0 +1,125 @@
+{%- liquid
+  assign product = product
+  assign current_variant = product.selected_or_first_available_variant
+  assign s = section.settings
+-%}
+<section class="section" data-product>
+  <div class="page-width">
+    <div class="product">
+
+      {%- comment -%} Gallery {%- endcomment -%}
+      <div class="product__gallery">
+        <div class="product__gallery-main" data-gallery-main>
+          {%- if product.featured_media -%}
+            <img src="{{ product.featured_media | image_url: width: 1200 }}"
+                 alt="{{ product.featured_media.alt | escape | default: product.title }}"
+                 width="900" height="1200" fetchpriority="high">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media limit: 8 -%}
+              <button type="button" data-thumb data-full="{{ media | image_url: width: 1200 }}" class="{% if forloop.first %}is-active{% endif %}" aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 200 }}" alt="" loading="lazy" width="150" height="200">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Info {%- endcomment -%}
+      <div class="product__info">
+        {%- if s.show_vendor and product.vendor != blank -%}
+          <div class="card__vendor">{{ product.vendor }}</div>
+        {%- endif -%}
+        <h1 class="product__title uppercase">{{ product.title }}</h1>
+
+        <div class="product__price" data-price>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="price__sale">{{ current_variant.price | money }}</span>
+            <span class="price__compare">{{ current_variant.compare_at_price | money }}</span>
+          {%- else -%}
+            {{ current_variant.price | money }}
+          {%- endif -%}
+        </div>
+
+        {%- unless product.has_only_default_variant -%}
+          <div class="product__options">
+            {%- for option in product.options_with_values -%}
+              <div class="opt" data-option>
+                <span class="opt__label">{{ option.name }}</span>
+                <div class="opt__values">
+                  {%- for value in option.values -%}
+                    {%- assign input_id = 'opt-' | append: option.position | append: '-' | append: forloop.index -%}
+                    <input type="radio" id="{{ input_id }}" name="option-{{ option.position }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                    <label for="{{ input_id }}">{{ value }}</label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <form data-product-form method="post" action="{{ routes.cart_add_url }}" class="product__buy">
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <div style="display:flex;gap:12px;align-items:stretch">
+            <div class="qty">
+              <button type="button" data-qty="minus" aria-label="{{ 'products.product.quantity.decrease' | t }}">&ndash;</button>
+              <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity.label' | t }}">
+              <button type="button" data-qty="plus" aria-label="{{ 'products.product.quantity.increase' | t }}">+</button>
+            </div>
+            <button type="submit" class="btn btn--full" data-add-text="{{ 'products.product.add_to_cart' | t }}" {% unless current_variant.available %}disabled{% endunless %}>
+              {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            </button>
+          </div>
+        </form>
+
+        {%- comment -%} Trust line {%- endcomment -%}
+        {%- if s.trust_text != blank -%}
+          <p class="product__meta text-light">{{ s.trust_text }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Accordions {%- endcomment -%}
+        <div class="accordion" style="margin-top:24px">
+          {%- if product.description != blank -%}
+            <details open>
+              <summary>{{ 'products.product.description' | t }}</summary>
+              <div class="accordion__content rte">{{ product.description }}</div>
+            </details>
+          {%- endif -%}
+          {%- if s.size_guide != blank -%}
+            <details>
+              <summary>{{ 'products.product.size_guide' | t }}</summary>
+              <div class="accordion__content rte">{{ s.size_guide }}</div>
+            </details>
+          {%- endif -%}
+          {%- if s.shipping != blank -%}
+            <details>
+              <summary>Shipping &amp; returns</summary>
+              <div class="accordion__content rte">{{ s.shipping }}</div>
+            </details>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>
+    {"variants": {{ product.variants | json }}}
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "text", "id": "trust_text", "label": "Trust line", "default": "In stock — ships within 1–2 business days. Cash on delivery available." },
+    { "type": "richtext", "id": "size_guide", "label": "Size guide", "default": "<p>S — Chest 42\" · Length 28\"<br>M — Chest 44\" · Length 29\"<br>L — Chest 46\" · Length 30\"<br>XL — Chest 48\" · Length 31\"</p>" },
+    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Free shipping over Rs 5,000. 7-day exchange on unworn items with tags.</p>" }
+  ]
+}
+{% endschema %}

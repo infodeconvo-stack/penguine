@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-header"><h2 class="uppercase">{{ section.settings.heading }}</h2></div>
+    {%- endif -%}
+    <div class="testimonials" style="--cols: {{ section.settings.columns }}">
+      {%- for block in section.blocks -%}
+        <figure class="testimonial" {{ block.shopify_attributes }}>
+          <div class="testimonial__stars">
+            {%- for i in (1..block.settings.rating) -%}{%- render 'icon', name: 'star' -%}{%- endfor -%}
+          </div>
+          <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+          <figcaption class="testimonial__author mt-2">— {{ block.settings.author }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What they're saying" },
+    { "type": "range", "id": "columns", "label": "Columns", "min": 1, "max": 4, "step": 1, "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Best fit I've found. The drop-shoulder is exactly right and the fabric is heavy in the best way." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Ahsan, Lahore" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "quote" },
+        { "type": "quote", "settings": { "quote": "Ordered 3 blanks and a print. Quality way above the price.", "author": "Hira, Karachi" } },
+        { "type": "quote", "settings": { "quote": "Fast delivery and the prints don't crack after wash. Repeat buyer.", "author": "Bilal, Islamabad" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

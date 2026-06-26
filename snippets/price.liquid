@@ -1,0 +1,22 @@
+{%- comment -%}
+  Price snippet. Accepts: product (object). Optional: el (extra class).
+{%- endcomment -%}
+{%- liquid
+  assign compare = product.compare_at_price
+  assign price = product.price
+  assign price_fmt = price | money
+  assign on_sale = false
+  if compare > price
+    assign on_sale = true
+  endif
+-%}
+<div class="price {{ el }}">
+  {%- if product.price_varies -%}
+    <span class="price--regular">{{ 'products.product.from_price_html' | t: price: price_fmt }}</span>
+  {%- elsif on_sale -%}
+    <span class="price__sale">{{ price | money }}</span>
+    <span class="price__compare">{{ compare | money }}</span>
+  {%- else -%}
+    <span class="price--regular">{{ price | money }}</span>
+  {%- endif -%}
+</div>

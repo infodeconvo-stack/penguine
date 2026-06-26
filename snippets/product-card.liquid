@@ -1,0 +1,61 @@
+{%- comment -%}
+  Product card.
+  Params: product (object, required), show_quick_add (bool)
+{%- endcomment -%}
+{%- liquid
+  assign ratio_class = ''
+  if settings.card_image_ratio == 'square'
+    assign ratio_class = 'square'
+  endif
+  assign second = product.media[1]
+-%}
+<div class="card">
+  <div class="card__media-wrap">
+  <a href="{{ product.url }}" class="card__media {{ ratio_class }}" aria-label="{{ product.title | escape }}">
+    {%- unless product.available -%}
+      <span class="card__badge">{{ 'products.product.sold_out' | t }}</span>
+    {%- else -%}
+      {%- if product.compare_at_price > product.price -%}
+        <span class="card__badge card__badge--sale">{{ 'products.product.on_sale' | t }}</span>
+      {%- endif -%}
+    {%- endunless -%}
+
+    {%- if product.featured_media -%}
+      <img class="card__img--one"
+           src="{{ product.featured_media | image_url: width: 600 }}"
+           srcset="{{ product.featured_media | image_url: width: 400 }} 400w, {{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 800 }} 800w"
+           sizes="(max-width: 750px) 50vw, 25vw"
+           alt="{{ product.featured_media.alt | escape | default: product.title }}"
+           width="600" height="800" loading="lazy">
+      {%- if settings.card_show_second_image and second -%}
+        <img class="card__img--two"
+             src="{{ second | image_url: width: 600 }}"
+             alt="" width="600" height="800" loading="lazy">
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </a>
+
+  {%- if show_quick_add and product.available -%}
+    <div class="card__quick">
+      {%- if product.variants.size == 1 -%}
+        <form data-product-form method="post" action="{{ routes.cart_add_url }}">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="btn btn--full btn--small">{{ 'products.product.add_to_cart' | t }}</button>
+        </form>
+      {%- else -%}
+        <a href="{{ product.url }}" class="btn btn--full btn--small">{{ 'products.product.choose_options' | t }}</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  </div>
+
+  <div class="card__info">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}
+      <div class="card__vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+    <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- render 'price', product: product -%}
+  </div>
+</div>

@@ -1,0 +1,188 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "DROP",
+    "theme_version": "1.0.0",
+    "theme_author": "Custom build",
+    "theme_documentation_url": "https://shopify.dev/themes",
+    "theme_support_url": "https://shopify.dev/themes"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Button / accent background",
+        "default": "#141414"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_text",
+        "label": "Button / accent text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders",
+        "default": "#e6e6e6"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale price",
+        "default": "#b00020"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Headings",
+        "default": "oswald_n6",
+        "info": "Bold uppercase display font suits a streetwear look."
+      },
+      {
+        "type": "font_picker",
+        "id": "body_font",
+        "label": "Body",
+        "default": "work_sans_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "Uppercase headings",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1200,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1400
+      }
+    ]
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Leave blank to show the shop name as text."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width",
+        "min": 60,
+        "max": 220,
+        "step": 10,
+        "unit": "px",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image ratio",
+        "options": [
+          { "value": "portrait", "label": "Portrait (3:4)" },
+          { "value": "square", "label": "Square (1:1)" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_second_image",
+        "label": "Show second image on hover",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https://instagram.com/yourshop"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp_link",
+        "label": "WhatsApp",
+        "info": "https://wa.me/92XXXXXXXXXX"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_show_free_shipping_bar",
+        "label": "Show free-shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping threshold (Rs)",
+        "default": 5000,
+        "info": "Order amount needed for free shipping. Set to 0 to hide the bar."
+      }
+    ]
+  }
+]

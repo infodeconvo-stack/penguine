@@ -1,0 +1,131 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "height": "full",
+        "eyebrow": "Drop-shoulder · printed in small batches",
+        "heading": "Wearable art",
+        "subheading": "Typography, calligraphy & line art on premium oversized tees.",
+        "button_label": "Shop all",
+        "button_link": "/collections/all",
+        "button_label_2": "Shop by style",
+        "button_link_2": "/collections",
+        "align": "left",
+        "text_color": "light",
+        "overlay_opacity": 0
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "m1": { "type": "item", "settings": { "text": "Typography" } },
+        "m2": { "type": "item", "settings": { "text": "Calligraphy" } },
+        "m3": { "type": "item", "settings": { "text": "Illustration" } },
+        "m4": { "type": "item", "settings": { "text": "Abstract" } },
+        "m5": { "type": "item", "settings": { "text": "Lettering" } },
+        "m6": { "type": "item", "settings": { "text": "Line Art" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
+      "settings": { "color_scheme": "dark", "speed": 30 }
+    },
+    "styles": {
+      "type": "collection-grid",
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "collection": "typography", "heading": "Typography" } },
+        "c2": { "type": "tile", "settings": { "collection": "calligraphy", "heading": "Calligraphy" } },
+        "c3": { "type": "tile", "settings": { "collection": "illustration", "heading": "Illustration" } },
+        "c4": { "type": "tile", "settings": { "collection": "abstract", "heading": "Abstract" } },
+        "c5": { "type": "tile", "settings": { "collection": "lettering", "heading": "Lettering" } },
+        "c6": { "type": "tile", "settings": { "collection": "line-art", "heading": "Line Art" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
+      "settings": { "eyebrow": "Find your style", "heading": "Shop by style", "columns": 3, "show_count": false }
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Most loved",
+        "heading": "Bestsellers",
+        "collection": "all",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_quick_add": true,
+        "show_view_all": true
+      }
+    },
+    "banner": {
+      "type": "image-banner",
+      "settings": {
+        "alt": "Never Lose — unwavering mindset",
+        "link": "/collections/all",
+        "full_width": true,
+        "spacing": "tight",
+        "fallback_image": "banner-never-lose.jpg",
+        "img_width": 1200,
+        "img_height": 450
+      }
+    },
+    "row_calligraphy": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Featured",
+        "heading": "Calligraphy",
+        "collection": "calligraphy",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_quick_add": true,
+        "show_view_all": true
+      }
+    },
+    "row_typography": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just dropped",
+        "heading": "Typography",
+        "collection": "typography",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_quick_add": true,
+        "show_view_all": true
+      }
+    },
+    "fit": {
+      "type": "image-with-text",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "ruler", "text": "230 GSM heavyweight cotton" } },
+        "f2": { "type": "feature", "settings": { "icon": "truck", "text": "Free shipping over Rs 5,000" } },
+        "f3": { "type": "feature", "settings": { "icon": "return", "text": "7-day easy exchange" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {
+        "layout": "image_first",
+        "eyebrow": "The fit",
+        "heading": "Oversized, not sloppy",
+        "text": "<p>Our drop-shoulder cut sits low on the arm for that relaxed streetwear silhouette — without losing shape. Heavyweight cotton that holds its form and keeps prints sharp, wash after wash.</p>",
+        "button_label": "View size guide",
+        "button_link": "shopify://pages/size-guide"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "quote", "settings": { "rating": 5, "quote": "The calligraphy print is stunning and the drop-shoulder fit is exactly right. Fabric is heavy in the best way.", "author": "Ahsan, Lahore" } },
+        "r2": { "type": "quote", "settings": { "rating": 5, "quote": "Ordered the typography tee — quality way above the price. Prints don't crack after wash.", "author": "Hira, Karachi" } },
+        "r3": { "type": "quote", "settings": { "rating": 5, "quote": "Fast delivery, premium packaging, and the art is unreal. Repeat buyer for sure.", "author": "Bilal, Islamabad" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": { "heading": "What they're saying", "columns": 3 }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Don't miss a drop",
+        "heading": "Get early access",
+        "text": "New art drops sell out fast. Join the list for first dibs + 10% off your first order.",
+        "button_label": "Join the drop"
+      }
+    }
+  },
+  "order": ["hero", "marquee", "styles", "bestsellers", "banner", "row_calligraphy", "row_typography", "fit", "reviews", "newsletter"]
+}

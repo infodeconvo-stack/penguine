@@ -1,0 +1,31 @@
+<article class="section">
+  <div class="page-width" style="max-width:760px">
+    <div class="section-header">
+      <span class="eyebrow">{{ article.published_at | date: '%B %d, %Y' }}</span>
+      <h1 class="uppercase">{{ article.title }}</h1>
+      {%- if article.author != blank -%}<p class="text-light">By {{ article.author }}</p>{%- endif -%}
+    </div>
+
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" style="width:100%;margin-bottom:32px" width="1400" height="900">
+    {%- endif -%}
+
+    <div class="rte">{{ article.content }}</div>
+
+    {%- if blog.comments_enabled? -%}
+      <div style="margin-top:48px">
+        <h3 class="uppercase">{{ article.comments_count }} comments</h3>
+        {%- for comment in article.comments -%}
+          <div style="border-top:1px solid var(--color-border);padding:16px 0">
+            <strong>{{ comment.author }}</strong>
+            <div class="text-light">{{ comment.content }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}
