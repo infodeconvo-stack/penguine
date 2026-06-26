@@ -255,7 +255,7 @@ button.btn {
 
 .card__info { padding: 14px 2px 0; }
 .card__vendor { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-text-light); margin-bottom: 4px; }
-.card__title { font-family: var(--body-font-family); font-size: .95rem; font-weight: 600; margin: 0 0 7px; line-height: 1.35; }
+.card__title { font-family: var(--body-font-family); font-size: .92rem; font-weight: 500; margin: 0 0 7px; line-height: 1.35; }
 .card__title a {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px; background-repeat: no-repeat; background-position: left 95%;
@@ -263,9 +263,9 @@ button.btn {
 }
 .card:hover .card__title a, .card__title a:hover { background-size: 100% 1px; }
 .price { display: flex; gap: 8px; align-items: baseline; font-size: .92rem; }
-.price__sale { color: var(--color-sale); font-weight: 600; }
+.price__sale { color: var(--color-sale); font-weight: 500; }
 .price__compare { color: var(--color-text-light); text-decoration: line-through; font-size: .85rem; }
-.price--regular { font-weight: 600; }
+.price--regular { font-weight: 500; }
 
 @media (max-width: 1100px) { .product-grid { --cols: 3; } }
 @media (max-width: 750px)  { .product-grid { --cols: 2; gap: 14px; } }
@@ -511,7 +511,7 @@ a:hover > .image-banner img { transform: scale(1.02); }
 .section-header.left .eyebrow::before { display: none; }
 .btn { transition: opacity .2s ease, transform .15s ease, background .2s ease, color .2s ease; }
 .card__media { background: #f3f3f3; }
-.card__title { letter-spacing: 0; }
+.card__title { letter-spacing: -0.005em; }
 .hero h1 { letter-spacing: -0.02em; }
 
 /* ==========================================================================

@@ -27,12 +27,14 @@
 
     {%- liquid
       assign body_font = settings.body_font
+      assign body_font_medium = body_font | font_modify: 'weight', '500'
       assign heading_font = settings.heading_font
       assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
     -%}
 
     <style>
       {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_medium | font_face: font_display: 'swap' }}
       {{ heading_font | font_face: font_display: 'swap' }}
       {{ heading_font_bold | font_face: font_display: 'swap' }}
 
