@@ -42,10 +42,14 @@
       {%- if product.variants.size == 1 -%}
         <form data-product-form method="post" action="{{ routes.cart_add_url }}">
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="btn btn--full btn--small">{{ 'products.product.add_to_cart' | t }}</button>
+          <button type="submit" class="card__quick-btn" aria-label="{{ 'products.product.add_to_cart' | t }}" title="{{ 'products.product.add_to_cart' | t }}">
+            {%- render 'icon', name: 'plus' -%}
+          </button>
         </form>
       {%- else -%}
-        <a href="{{ product.url }}" class="btn btn--full btn--small">{{ 'products.product.choose_options' | t }}</a>
+        <a href="{{ product.url }}" class="card__quick-btn" aria-label="{{ 'products.product.choose_options' | t }}" title="{{ 'products.product.choose_options' | t }}">
+          {%- render 'icon', name: 'plus' -%}
+        </a>
       {%- endif -%}
     </div>
   {%- endif -%}

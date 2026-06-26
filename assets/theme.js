@@ -173,8 +173,9 @@
     if (!form) return;
     e.preventDefault();
     const btn = form.querySelector('[type="submit"]');
-    const original = btn ? btn.textContent : '';
-    if (btn) { btn.classList.add('is-disabled'); btn.textContent = 'Adding…'; }
+    const isIcon = btn && btn.classList.contains('card__quick-btn');
+    const original = btn ? btn.innerHTML : '';
+    if (btn) { btn.classList.add('is-disabled'); if (!isIcon) btn.textContent = 'Adding…'; }
     try {
       const res = await fetch(window.routes.cart_add_url + '.js', {
         method: 'POST',
@@ -183,17 +184,22 @@
       });
       const data = await res.json();
       if (data.status) { // error
-        if (btn) btn.textContent = data.description || window.cartStrings.error;
-        setTimeout(() => { if (btn) btn.textContent = original; }, 2000);
+        if (btn && !isIcon) {
+          btn.textContent = data.description || window.cartStrings.error;
+          setTimeout(() => { btn.innerHTML = original; }, 2000);
+        }
       } else {
         await refreshCart();
         openDrawer($('#CartDrawer'));
-        if (btn) btn.textContent = 'Added ✓';
-        setTimeout(() => { if (btn) btn.textContent = original; }, 1500);
+        if (btn) {
+          btn.classList.add('is-added');
+          if (!isIcon) btn.textContent = 'Added ✓';
+          setTimeout(() => { btn.classList.remove('is-added'); btn.innerHTML = original; }, 1500);
+        }
       }
     } catch (err) {
       console.error(err);
-      if (btn) btn.textContent = original;
+      if (btn) btn.innerHTML = original;
     } finally {
       if (btn) btn.classList.remove('is-disabled');
     }
