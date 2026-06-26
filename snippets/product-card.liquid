@@ -47,7 +47,7 @@
           </button>
         </form>
       {%- else -%}
-        <a href="{{ product.url }}" class="card__quick-btn" aria-label="{{ 'products.product.choose_options' | t }}" title="{{ 'products.product.choose_options' | t }}">
+        <a href="{{ product.url }}" class="card__quick-btn" data-quick-add="{{ product.handle }}" aria-label="{{ 'products.product.choose_options' | t }}" title="{{ 'products.product.choose_options' | t }}">
           {%- render 'icon', name: 'plus' -%}
         </a>
       {%- endif -%}

@@ -610,3 +610,35 @@ img, svg, video { max-width: 100%; }
   .card__quick { opacity: 1; transform: none; }
 }
 
+/* ==========================================================================
+   QUICK-ADD bottom sheet (pick a variant without leaving the page)
+   ========================================================================== */
+.quick-add {
+  position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 105%);
+  width: min(460px, 100%); background: var(--color-bg); z-index: 96;
+  transition: transform .34s cubic-bezier(.2,.7,.2,1);
+  border-radius: 14px 14px 0 0; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 -12px 44px rgba(0,0,0,.22);
+}
+.quick-add.is-open { transform: translate(-50%, 0); }
+.quick-add__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--color-border);
+  position: sticky; top: 0; background: var(--color-bg);
+  font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .85rem;
+}
+.quick-add__body { padding: 18px 20px 24px; }
+.qa-product { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; }
+.qa-product img { width: 66px; aspect-ratio: 3/4; object-fit: cover; background: #f1f0ed; }
+.qa-title { font-weight: 600; line-height: 1.3; }
+.qa-price { margin-top: 3px; }
+.qa-price .price__compare { margin-left: 8px; }
+.qa-opt { margin-bottom: 18px; }
+.qa-opt__label { display: block; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; margin-bottom: 9px; }
+.qa-values { display: flex; flex-wrap: wrap; gap: 8px; }
+.qa-values input { position: absolute; opacity: 0; pointer-events: none; }
+.qa-values label { border: 1px solid var(--color-border); padding: 9px 15px; cursor: pointer; min-width: 44px; text-align: center; font-size: .9rem; transition: .15s ease; }
+.qa-values input:checked + label { border-color: var(--color-text); background: var(--color-text); color: var(--color-bg); }
+.qa-values input:disabled + label { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+.quick-add .btn[disabled] { opacity: .4; cursor: not-allowed; }
+

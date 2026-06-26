@@ -310,6 +310,111 @@
     }
   }
 
+  /* --- Quick add (variant picker bottom sheet) --------------------------- */
+  function sizedImg(url, w) {
+    if (!url) return '';
+    if (url.indexOf('//') === 0) url = 'https:' + url;
+    return url.replace(/(\.(jpe?g|png|webp|gif|avif))(\?.*)?$/i, '_' + w + 'x$1$3');
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  }
+
+  async function openQuickAdd(handle) {
+    const modal = $('#QuickAdd');
+    if (!modal) return;
+    const body = modal.querySelector('[data-qa-body]');
+    body.innerHTML = '<p class="text-light" style="padding:30px 0;text-align:center">Loading…</p>';
+    openDrawer(modal);
+    try {
+      const res = await fetch('/products/' + handle + '.js', { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('fetch failed');
+      renderQuickAdd(modal, await res.json(), handle);
+    } catch (e) {
+      body.innerHTML = '<p class="text-light" style="padding:24px 0;text-align:center">Could not load options. <a href="/products/' + handle + '" style="text-decoration:underline">View product</a></p>';
+    }
+  }
+
+  function renderQuickAdd(modal, product, handle) {
+    const body = modal.querySelector('[data-qa-body]');
+    const imgUrl = product.featured_image || (product.images && product.images[0]);
+    const imgHtml = imgUrl ? '<img src="' + sizedImg(imgUrl, 200) + '" alt="">' : '';
+
+    let html = '<div class="qa-product">' + imgHtml +
+      '<div><div class="qa-title">' + esc(product.title) + '</div>' +
+      '<div class="qa-price" data-qa-price>' + formatMoney(product.price) + '</div></div></div>' +
+      '<form data-qa-form>';
+
+    product.options.forEach((optObj, i) => {
+      const optName = (typeof optObj === 'string') ? optObj : (optObj.name || ('Option ' + (i + 1)));
+      const seen = {}, values = [];
+      product.variants.forEach((v) => { const val = v.options[i]; if (!seen[val]) { seen[val] = 1; values.push(val); } });
+      html += '<div class="qa-opt" data-qa-option><span class="qa-opt__label">' + esc(optName) + '</span><div class="qa-values">';
+      values.forEach((val, j) => {
+        const id = 'qa-' + i + '-' + j;
+        html += '<input type="radio" id="' + id + '" name="qa-opt-' + i + '" value="' + esc(val) + '"' + (j === 0 ? ' checked' : '') + '>' +
+                '<label for="' + id + '">' + esc(val) + '</label>';
+      });
+      html += '</div></div>';
+    });
+
+    html += '<button type="submit" class="btn btn--full" data-qa-add>Add to cart</button></form>';
+    body.innerHTML = html;
+
+    const optionGroups = $$('[data-qa-option]', body);
+    const priceEl = $('[data-qa-price]', body);
+    const addBtn = $('[data-qa-add]', body);
+
+    function currentVariant() {
+      const opts = optionGroups.map((g) => { const c = g.querySelector('input:checked'); return c ? c.value : null; });
+      return product.variants.find((v) => v.options.every((o, i) => o === opts[i]));
+    }
+    function update() {
+      const v = currentVariant();
+      if (priceEl) {
+        if (v && v.compare_at_price && v.compare_at_price > v.price) {
+          priceEl.innerHTML = '<span class="price__sale">' + formatMoney(v.price) + '</span><span class="price__compare">' + formatMoney(v.compare_at_price) + '</span>';
+        } else {
+          priceEl.textContent = formatMoney(v ? v.price : product.price);
+        }
+      }
+      if (addBtn) {
+        if (v && v.available) { addBtn.disabled = false; addBtn.textContent = 'Add to cart'; }
+        else { addBtn.disabled = true; addBtn.textContent = v ? 'Sold out' : 'Unavailable'; }
+      }
+    }
+    $$('[data-qa-option] input', body).forEach((el) => el.addEventListener('change', update));
+    update();
+
+    body.querySelector('[data-qa-form]').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const v = currentVariant();
+      if (!v || !v.available) return;
+      addBtn.disabled = true; addBtn.textContent = 'Adding…';
+      try {
+        const res = await fetch(window.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ id: v.id, quantity: 1 })
+        });
+        const data = await res.json();
+        if (data.status) {
+          addBtn.textContent = data.description || window.cartStrings.error;
+          setTimeout(() => { addBtn.disabled = false; addBtn.textContent = 'Add to cart'; }, 1800);
+        } else {
+          await refreshCart();
+          closeDrawer();
+          setTimeout(() => openDrawer($('#CartDrawer')), 340);
+        }
+      } catch (err) { console.error(err); addBtn.disabled = false; addBtn.textContent = 'Add to cart'; }
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-quick-add]');
+    if (trigger) { e.preventDefault(); openQuickAdd(trigger.getAttribute('data-quick-add')); }
+  });
+
   /* --- Init -------------------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
     refreshCart();

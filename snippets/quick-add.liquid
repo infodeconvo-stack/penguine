@@ -1,0 +1,10 @@
+{%- comment -%} Quick-add bottom sheet. Populated by theme.js on demand. {%- endcomment -%}
+<aside id="QuickAdd" class="quick-add" aria-hidden="true" role="dialog" aria-label="Quick add">
+  <div class="quick-add__head">
+    <strong>{{ 'products.product.choose_options' | t }}</strong>
+    <button type="button" class="icon-btn" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+      {%- render 'icon', name: 'close' -%}
+    </button>
+  </div>
+  <div class="quick-add__body" data-qa-body></div>
+</aside>
