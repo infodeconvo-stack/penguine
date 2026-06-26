@@ -53,10 +53,17 @@
     "settings": [
       {
         "type": "font_picker",
+        "id": "display_font",
+        "label": "Headlines",
+        "default": "playfair_display_n5",
+        "info": "Big section/page titles. An elegant serif suits a fashion look."
+      },
+      {
+        "type": "font_picker",
         "id": "heading_font",
-        "label": "Headings",
+        "label": "Buttons & labels",
         "default": "archivo_n6",
-        "info": "A clean modern grotesk. Change it here anytime."
+        "info": "Buttons, menu, eyebrows and small UI labels."
       },
       {
         "type": "font_picker",
@@ -67,8 +74,8 @@
       {
         "type": "checkbox",
         "id": "heading_uppercase",
-        "label": "Uppercase headings",
-        "default": true
+        "label": "Uppercase headlines",
+        "default": false
       }
     ]
   },

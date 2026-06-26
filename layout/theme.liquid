@@ -30,6 +30,7 @@
       assign body_font_medium = body_font | font_modify: 'weight', '500'
       assign heading_font = settings.heading_font
       assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
+      assign display_font = settings.display_font
     -%}
 
     <style>
@@ -37,6 +38,7 @@
       {{ body_font_medium | font_face: font_display: 'swap' }}
       {{ heading_font | font_face: font_display: 'swap' }}
       {{ heading_font_bold | font_face: font_display: 'swap' }}
+      {{ display_font | font_face: font_display: 'swap' }}
 
       :root {
         --color-bg: {{ settings.color_bg }};
@@ -51,10 +53,16 @@
         --body-font-weight: {{ body_font.weight }};
         --heading-font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
         --heading-font-weight: {{ heading_font.weight }};
+        --display-font-family: {{ display_font.family }}, {{ display_font.fallback_families }};
+        --display-font-weight: {{ display_font.weight }};
 
         --page-width: {{ settings.page_width }}px;
         --header-height: 68px;
       }
+
+      {%- unless settings.heading_uppercase -%}
+      .uppercase { text-transform: none; }
+      {%- endunless -%}
     </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}

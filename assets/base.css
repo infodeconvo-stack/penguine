@@ -29,11 +29,11 @@ figure { margin: 0; }
 
 /* --- Typography ---------------------------------------------------------- */
 h1, h2, h3, h4, h5 {
-  font-family: var(--heading-font-family);
-  font-weight: var(--heading-font-weight);
-  line-height: 1.08;
+  font-family: var(--display-font-family);
+  font-weight: var(--display-font-weight);
+  line-height: 1.12;
   margin: 0 0 .4em;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .uppercase, body[class] .h-upper { text-transform: uppercase; }
@@ -512,7 +512,7 @@ a:hover > .image-banner img { transform: scale(1.02); }
 .btn { transition: opacity .2s ease, transform .15s ease, background .2s ease, color .2s ease; }
 .card__media { background: #f3f3f3; }
 .card__title { letter-spacing: -0.005em; }
-.hero h1 { letter-spacing: -0.02em; }
+.hero h1 { letter-spacing: 0; }
 
 /* ==========================================================================
    MOBILE RESPONSIVE
