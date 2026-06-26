@@ -116,16 +116,7 @@
       },
       "block_order": ["r1", "r2", "r3"],
       "settings": { "heading": "What they're saying", "columns": 3 }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "eyebrow": "Don't miss a drop",
-        "heading": "Get early access",
-        "text": "New art drops sell out fast. Join the list for first dibs + 10% off your first order.",
-        "button_label": "Join the drop"
-      }
     }
   },
-  "order": ["hero", "marquee", "styles", "bestsellers", "banner", "row_calligraphy", "row_typography", "fit", "reviews", "newsletter"]
+  "order": ["hero", "marquee", "styles", "bestsellers", "banner", "row_calligraphy", "row_typography", "fit", "reviews"]
 }

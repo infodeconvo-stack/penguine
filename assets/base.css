@@ -395,6 +395,19 @@ button.btn {
 
 /* --- Footer -------------------------------------------------------------- */
 .footer { background: var(--color-text); color: var(--color-bg); padding: clamp(48px, 6vw, 80px) 0 28px; }
+.footer__newsletter { border-bottom: 1px solid rgba(255,255,255,.15); padding-bottom: clamp(36px, 4vw, 48px); margin-bottom: clamp(40px, 5vw, 56px); }
+.footer__news-inner { display: flex; justify-content: space-between; align-items: center; gap: 28px; flex-wrap: wrap; }
+.footer__news-title { color: var(--color-bg); margin: 0 0 6px; font-size: clamp(1.4rem, 2.6vw, 2rem); }
+.footer__news-copy p { margin: 0; opacity: .82; font-size: .92rem; max-width: 42ch; }
+.footer__news-action { flex: 0 1 440px; }
+.footer__news-form { display: flex; }
+.footer__news-form input { flex: 1; min-width: 0; border: 1px solid rgba(255,255,255,.4); background: transparent; color: var(--color-bg); padding: 14px 16px; font-family: inherit; font-size: .95rem; }
+.footer__news-form input::placeholder { color: rgba(255,255,255,.55); }
+.footer__news-form button { background: var(--color-bg); color: var(--color-text); border: 1px solid var(--color-bg); padding: 0 22px; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; cursor: pointer; white-space: nowrap; }
+.footer__news-success { opacity: .9; margin: 10px 0 0; font-size: .88rem; }
+.footer__pay { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.footer__pay .payment-icon { height: 22px; width: auto; }
+@media (max-width: 700px) { .footer__news-action { flex: 1 1 100%; } }
 .footer a:hover { text-decoration: underline; }
 .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
 .footer__brand .logo-text { font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .18em; font-size: 1.4rem; color: var(--color-bg); }
