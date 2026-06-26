@@ -507,6 +507,8 @@ img, svg, video { max-width: 100%; }
   .product { gap: 28px; }
   .testimonials { gap: 16px; }
   .header__nav { gap: 18px; }
+  /* sections set --cols inline, so override needs !important */
+  .product-grid { --cols: 3 !important; }
 }
 
 /* --- Phone --- */
@@ -531,8 +533,11 @@ img, svg, video { max-width: 100%; }
   .section-header .eyebrow::before,
   .section-header .eyebrow::after { width: 16px; margin: 0 8px; }
 
-  /* Product grid + cards */
-  .product-grid { gap: 12px; }
+  /* Grids: force responsive columns (sections set --cols inline → need !important) */
+  .product-grid { --cols: 2 !important; gap: 12px; }
+  .style-grid { --cols: 2 !important; }
+  .collection-list { --cols: 2 !important; }
+  .testimonials { --cols: 1 !important; }
   .card__title { font-size: .9rem; }
   .card__quick { opacity: 1; transform: none; } /* touch: no hover, keep add button visible */
 
@@ -572,8 +577,8 @@ img, svg, video { max-width: 100%; }
   .header__logo .logo-text { font-size: 1.15rem; letter-spacing: .12em; }
   .header__actions { gap: 8px; }
   .header__actions button, .header__actions a { padding: 4px; }
-  .product-grid { --cols: 2; gap: 10px; }
-  .style-grid { gap: 8px; }
+  .product-grid { --cols: 2 !important; gap: 10px; }
+  .style-grid { --cols: 2 !important; gap: 8px; }
   h1 { font-size: clamp(1.8rem, 9vw, 2.3rem); }
   .btn { padding: 13px 20px; font-size: .8rem; }
 }
