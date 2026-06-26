@@ -31,6 +31,7 @@
       assign heading_font = settings.heading_font
       assign heading_font_bold = heading_font | font_modify: 'weight', 'bold'
       assign display_font = settings.display_font
+      assign display_font_normal = display_font | font_modify: 'weight', '400'
     -%}
 
     <style>
@@ -39,6 +40,7 @@
       {{ heading_font | font_face: font_display: 'swap' }}
       {{ heading_font_bold | font_face: font_display: 'swap' }}
       {{ display_font | font_face: font_display: 'swap' }}
+      {{ display_font_normal | font_face: font_display: 'swap' }}
 
       :root {
         --color-bg: {{ settings.color_bg }};
