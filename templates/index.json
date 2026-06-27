@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -19,28 +28,128 @@
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "m1": { "type": "item", "settings": { "text": "Typography" } },
-        "m2": { "type": "item", "settings": { "text": "Calligraphy" } },
-        "m3": { "type": "item", "settings": { "text": "Illustration" } },
-        "m4": { "type": "item", "settings": { "text": "Abstract" } },
-        "m5": { "type": "item", "settings": { "text": "Lettering" } },
-        "m6": { "type": "item", "settings": { "text": "Line Art" } }
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Typography"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Calligraphy"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Illustration"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "Abstract"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "Lettering"
+          }
+        },
+        "m6": {
+          "type": "item",
+          "settings": {
+            "text": "Line Art"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
-      "settings": { "color_scheme": "dark", "speed": 30 }
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "color_scheme": "dark",
+        "speed": 30
+      }
     },
     "styles": {
       "type": "collection-grid",
       "blocks": {
-        "c1": { "type": "tile", "settings": { "collection": "typography", "heading": "Typography" } },
-        "c2": { "type": "tile", "settings": { "collection": "calligraphy", "heading": "Calligraphy" } },
-        "c3": { "type": "tile", "settings": { "collection": "illustration", "heading": "Illustration" } },
-        "c4": { "type": "tile", "settings": { "collection": "abstract", "heading": "Abstract" } },
-        "c5": { "type": "tile", "settings": { "collection": "lettering", "heading": "Lettering" } },
-        "c6": { "type": "tile", "settings": { "collection": "line-art", "heading": "Line Art" } }
+        "c1": {
+          "type": "tile",
+          "settings": {
+            "collection": "typography",
+            "heading": "Typography",
+            "link": "",
+            "wide": false
+          }
+        },
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "collection": "calligraphy",
+            "heading": "Calligraphy",
+            "link": "",
+            "wide": false
+          }
+        },
+        "c3": {
+          "type": "tile",
+          "settings": {
+            "collection": "illustration",
+            "heading": "Illustration",
+            "link": "",
+            "wide": false
+          }
+        },
+        "c4": {
+          "type": "tile",
+          "settings": {
+            "collection": "abstract",
+            "heading": "Abstract",
+            "link": "",
+            "wide": false
+          }
+        },
+        "c5": {
+          "type": "tile",
+          "settings": {
+            "collection": "lettering",
+            "heading": "Lettering",
+            "link": "",
+            "wide": false
+          }
+        },
+        "c6": {
+          "type": "tile",
+          "settings": {
+            "collection": "line-art",
+            "heading": "Line Art",
+            "link": "",
+            "wide": false
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"],
-      "settings": { "eyebrow": "Find your style", "heading": "Shop by style", "columns": 3, "show_count": false }
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "eyebrow": "Find your style",
+        "heading": "Shop by style",
+        "columns": 3,
+        "show_count": false
+      }
     },
     "bestsellers": {
       "type": "featured-collection",
@@ -57,10 +166,12 @@
     "banner": {
       "type": "image-banner",
       "settings": {
+        "image": "shopify://shop_images/White_Black_Modern_Fashion_New_Arrival_Banner.png",
         "alt": "Never Lose — unwavering mindset",
         "link": "/collections/all",
         "full_width": true,
-        "spacing": "tight",
+        "spacing": "none",
+        "eager": false,
         "fallback_image": "banner-never-lose.jpg",
         "img_width": 1200,
         "img_height": 450
@@ -93,16 +204,39 @@
     "fit": {
       "type": "image-with-text",
       "blocks": {
-        "f1": { "type": "feature", "settings": { "icon": "ruler", "text": "230 GSM heavyweight cotton" } },
-        "f2": { "type": "feature", "settings": { "icon": "truck", "text": "Free shipping over Rs 5,000" } },
-        "f3": { "type": "feature", "settings": { "icon": "return", "text": "7-day easy exchange" } }
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "ruler",
+            "text": "230 GSM heavyweight cotton"
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "text": "Free shipping over Rs 5,000"
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "text": "7-day easy exchange"
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
       "settings": {
         "layout": "image_first",
         "eyebrow": "The fit",
         "heading": "Oversized, not sloppy",
         "text": "<p>Our drop-shoulder cut sits low on the arm for that relaxed streetwear silhouette — without losing shape. Heavyweight cotton that holds its form and keeps prints sharp, wash after wash.</p>",
+        "bg": "",
         "button_label": "View size guide",
         "button_link": "shopify://pages/size-guide"
       }
@@ -110,13 +244,51 @@
     "reviews": {
       "type": "testimonials",
       "blocks": {
-        "r1": { "type": "quote", "settings": { "rating": 5, "quote": "The calligraphy print is stunning and the drop-shoulder fit is exactly right. Fabric is heavy in the best way.", "author": "Ahsan, Lahore" } },
-        "r2": { "type": "quote", "settings": { "rating": 5, "quote": "Ordered the typography tee — quality way above the price. Prints don't crack after wash.", "author": "Hira, Karachi" } },
-        "r3": { "type": "quote", "settings": { "rating": 5, "quote": "Fast delivery, premium packaging, and the art is unreal. Repeat buyer for sure.", "author": "Bilal, Islamabad" } }
+        "r1": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "The calligraphy print is stunning and the drop-shoulder fit is exactly right. Fabric is heavy in the best way.",
+            "author": "Ahsan, Lahore"
+          }
+        },
+        "r2": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "Ordered the typography tee — quality way above the price. Prints don't crack after wash.",
+            "author": "Hira, Karachi"
+          }
+        },
+        "r3": {
+          "type": "quote",
+          "settings": {
+            "rating": 5,
+            "quote": "Fast delivery, premium packaging, and the art is unreal. Repeat buyer for sure.",
+            "author": "Bilal, Islamabad"
+          }
+        }
       },
-      "block_order": ["r1", "r2", "r3"],
-      "settings": { "heading": "What they're saying", "columns": 3 }
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "What they're saying",
+        "columns": 3
+      }
     }
   },
-  "order": ["hero", "marquee", "styles", "bestsellers", "banner", "row_calligraphy", "row_typography", "fit", "reviews"]
+  "order": [
+    "hero",
+    "marquee",
+    "styles",
+    "bestsellers",
+    "banner",
+    "row_calligraphy",
+    "row_typography",
+    "fit",
+    "reviews"
+  ]
 }
