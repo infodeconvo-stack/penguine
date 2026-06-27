@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_bg": "#ffffff",
@@ -11,7 +20,8 @@
     "body_font": "work_sans_n4",
     "heading_uppercase": false,
     "page_width": 1400,
-    "logo_width": 120,
+    "logo": "shopify://shop_images/Black_and_Green_Modern_Fashion_T-Shirt_New_Drop_Collection_Instagram_Post_1.png",
+    "logo_width": 60,
     "card_image_ratio": "portrait",
     "card_show_vendor": false,
     "card_show_second_image": true,
@@ -20,6 +30,37 @@
     "social_facebook_link": "",
     "social_whatsapp_link": "",
     "cart_show_free_shipping_bar": true,
-    "cart_free_shipping_threshold": 5000
+    "cart_free_shipping_threshold": 5000,
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "Free shipping on orders over Rs 5,000 — new prints dropping weekly",
+          "link": "",
+          "bg": "#141414",
+          "text_color": "#f6f4ef"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "newsletter_enable": true,
+          "newsletter_heading": "Join the list",
+          "newsletter_text": "Get 10% off your first order, plus first access to new drops.",
+          "newsletter_button": "Subscribe",
+          "show_logo": true,
+          "tagline": "Wearable & wall-worthy graphic art. Printed in small batches.",
+          "copyright": "All rights reserved.",
+          "show_payment_icons": true
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
