@@ -1,17 +1,97 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": { "type": "main-product", "settings": {} },
-    "related": { "type": "product-recommendations", "settings": {} },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "bf_size_charts_block_pyQx4t": {
+          "type": "shopify://apps/bf-size-charts/blocks/block/47ee4f2e-eb5e-41af-9beb-e2786646bf2a",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "bf_size_charts_block_pyQx4t"
+      ],
+      "settings": {
+        "show_vendor": false,
+        "show_dynamic_checkout": true,
+        "trust_1": "Gallery Quality",
+        "trust_2": "14 Day Returns",
+        "trust_3": "Secure Transactions",
+        "acc_1_title": "Description",
+        "acc_2_title": "Size & Fit",
+        "acc_2_text": "<p>Oversized, drop-shoulder fit. Model wears size M. Check the size chart for measurements.</p>",
+        "acc_3_title": "Materials & Care",
+        "acc_3_text": "<p>Heavyweight 230 GSM combed cotton. Machine wash cold, inside out. Do not tumble dry or iron over the print.</p>",
+        "acc_4_title": "Shipping",
+        "acc_4_text": "<p>Dispatched within 1–2 business days. Free shipping on orders over Rs 5,000.</p>",
+        "acc_5_title": "Returns",
+        "acc_5_text": "<p>7-day exchange on unworn items with original tags.</p>"
+      }
+    },
+    "related": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "limit": 4,
+        "columns": 4
+      }
+    },
     "reviews": {
       "type": "reviews-summary",
       "blocks": {
-        "r1": { "type": "review", "settings": { "rating": 5, "quote": "High quality print on high quality matte poster! Cannot wait to gift it. It's perfect. Thank you!", "author": "Jennifer" } },
-        "r2": { "type": "review", "settings": { "rating": 5, "quote": "Stunning colours and super fast delivery. Framed it the same day — looks incredible on the wall.", "author": "Daniel" } },
-        "r3": { "type": "review", "settings": { "rating": 5, "quote": "Exactly as pictured and premium quality. Already ordered two more for friends.", "author": "Aisha" } }
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "High quality print on high quality matte poster! Cannot wait to gift it. It's perfect. Thank you!",
+            "author": "Jennifer"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Stunning colours and super fast delivery. Framed it the same day — looks incredible on the wall.",
+            "author": "Daniel"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Exactly as pictured and premium quality. Already ordered two more for friends.",
+            "author": "Aisha"
+          }
+        }
       },
-      "block_order": ["r1", "r2", "r3"],
-      "settings": { "heading": "What our Customers Say", "review_count": "540" }
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "What our Customers Say",
+        "review_count": "540"
+      }
+    },
+    "1782678207a347ee45": {
+      "type": "apps",
+      "settings": {}
     }
   },
-  "order": ["main", "related", "reviews"]
+  "order": [
+    "main",
+    "related",
+    "reviews",
+    "1782678207a347ee45"
+  ]
 }
