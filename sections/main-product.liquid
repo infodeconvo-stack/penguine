@@ -88,6 +88,15 @@
             {%- endfor -%}
           {%- endunless -%}
 
+          {%- comment -%} App blocks (e.g. Size Chart) render here, right below the size/options {%- endcomment -%}
+          {%- if section.blocks.size > 0 -%}
+            <div class="product__app-blocks">
+              {%- for block in section.blocks -%}
+                {%- if block.type == '@app' -%}{%- render block -%}{%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
           <div class="opt">
             <span class="opt__label">{{ 'products.product.quantity.label' | t }}</span>
             <div class="qty">
@@ -157,6 +166,7 @@
 {% schema %}
 {
   "name": "Product",
+  "blocks": [{ "type": "@app" }],
   "settings": [
     { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout (Buy with Shop) button", "default": true },

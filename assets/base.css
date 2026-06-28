@@ -543,6 +543,7 @@ a:hover > .image-banner img { transform: scale(1.02); }
 .product__tax a { text-decoration: underline; }
 
 .product-form { margin: 0; }
+.product__app-blocks { margin: 2px 0 18px; }
 .product__options, .opt { margin: 0 0 18px; }
 .opt__label { display: block; font-family: var(--heading-font-family); text-transform: uppercase; letter-spacing: .08em; font-size: .74rem; margin-bottom: 9px; color: var(--color-text); }
 .opt__label [data-opt-selected] { color: var(--color-text-light); }
