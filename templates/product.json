@@ -52,24 +52,24 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "High quality print on high quality matte poster! Cannot wait to gift it. It's perfect. Thank you!",
-            "author": "Jennifer"
+            "quote": "The print quality is amazing! Cannot wait to gift it — it's absolutely perfect. Thank you so much!",
+            "author": "Ayesha Khan, Karachi"
           }
         },
         "r2": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "Stunning colours and super fast delivery. Framed it the same day — looks incredible on the wall.",
-            "author": "Daniel"
+            "quote": "Stunning colours and super fast delivery — reached me in Lahore in just 2 days. Looks incredible, highly recommended!",
+            "author": "Bilal Ahmed, Lahore"
           }
         },
         "r3": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "Exactly as pictured and premium quality. Already ordered two more for friends.",
-            "author": "Aisha"
+            "quote": "Exactly as pictured and premium quality. Already ordered two more for my cousins — everyone loved it!",
+            "author": "Fatima Malik, Islamabad"
           }
         }
       },
